@@ -3,20 +3,20 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {addTodoItem, hideModalArea} from '../../actions'
+import {addTodoItem, hideModalArea, saveEditedTodoItem, changeModalField} from '../../actions'
 
 import './ModalItem.css';
 
 const ModalItem = ({
   addItem1,
   modalShow1,
-  currentId,
-  currentTitle,
-  currentDescription,
-  currentPriority,
-  handleSelect,
+  currentId1,
   hideModalArea1,
+  saveEditedItem,
+  changeField,
+  modalFields,
 }) => {
+  const {modalTitle, modalDescription, modalPriority} = modalFields;
   return (
     <section className={modalShow1 ? 'visible' : 'invisible'}>
       <div className="modal__fade" onClick={hideModalArea1} />
@@ -25,10 +25,10 @@ const ModalItem = ({
           <label htmlFor="title">
             Title
             <input
-              value={currentTitle}
-              onChange={handleSelect}
+              value={modalTitle}
+              onChange={changeField}
               type="text"
-              name="currentTitle"
+              name="modalTitle"
               id="title"
               placeholder="Title"
             />
@@ -38,9 +38,9 @@ const ModalItem = ({
           <label htmlFor="description">
             Description
             <textarea
-              value={currentDescription}
-              onChange={handleSelect}
-              name="currentDescription"
+              value={modalDescription}
+              onChange={changeField}
+              name="modalDescription"
               id="description"
               cols="22"
               rows="2"
@@ -51,7 +51,7 @@ const ModalItem = ({
         <div className="modal__part">
           <label htmlFor="priority">
             Priority
-            <select value={currentPriority} onChange={handleSelect} name="currentPriority" id="priority">
+            <select value={modalPriority} onChange={changeField} name="modalPriority" id="priority">
               <option value="high">high</option>
               <option value="normal">normal</option>
               <option value="low">low</option>
@@ -64,8 +64,15 @@ const ModalItem = ({
           </button>
           <button
             type="button"
-            className="btn btn-success"
-            onClick={() => addItem1(currentTitle, currentDescription, currentPriority, currentId)}
+            className={!currentId1 ? "btn btn-success" : "d-none"}
+            onClick={() => addItem1(modalTitle, modalDescription, modalPriority)}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className={currentId1 ? "btn btn-success" : "d-none"}
+            onClick={() => saveEditedItem(modalTitle, modalDescription, modalPriority, currentId1)}
           >
             Save
           </button>
@@ -75,20 +82,28 @@ const ModalItem = ({
   );
 };
 
+ModalItem.defaultProps = {
+  currentId1: '',
+}
+
 ModalItem.propTypes = {
   addItem1: PropTypes.func.isRequired,
   modalShow1: PropTypes.bool.isRequired,
-  currentId: PropTypes.string.isRequired,
-  currentTitle: PropTypes.string.isRequired,
-  currentDescription: PropTypes.string.isRequired,
-  currentPriority: PropTypes.string.isRequired,
-  handleSelect: PropTypes.func.isRequired,
+  currentId1: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   hideModalArea1: PropTypes.func.isRequired,
+  saveEditedItem: PropTypes.func.isRequired,
+  changeField: PropTypes.func.isRequired,
+  modalFields: PropTypes.instanceOf(Object).isRequired,
 }
 
 const mapStateToProps = (state) => {
   return {
     modalShow1: state.todos.modalShow,
+    currentId1: state.todos.currentId,
+    modalFields: state.todos.modalFields,
   }
 }
 
@@ -96,6 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addItem1: (title, description, priority) => dispatch(addTodoItem(title, description, priority)),
     hideModalArea1: () => dispatch(hideModalArea()),
+    saveEditedItem: (title, description, priority, id) => dispatch(saveEditedTodoItem(title, description, priority, id)),
+    changeField: (e) => dispatch(changeModalField(e.target.name, e.target.value)),
   }
 }
 
