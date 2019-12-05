@@ -15,24 +15,10 @@ const initialState = {
   todos: [
     {
       id: 1,
-      title: '123',
-      description: 'klsjfd sldk fjsadlf!',
+      title: 'Homework 7',
+      description: 'Ciklum University: JS Band Internship. Homework task 7',
       priority: 'high',
       status: true,
-    },
-    {
-      id: 2,
-      title: 'kjsdf123',
-      description: '90-=klsjfd sldk fjsadlf!',
-      priority: 'low',
-      status: true,
-    },
-    {
-      id: 3,
-      title: 'l;kfdh123',
-      description: '12313klsjfd sldk fjsadlf!',
-      priority: 'normal',
-      status: false,
     },
   ],
   filters: {
