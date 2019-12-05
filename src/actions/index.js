@@ -5,6 +5,9 @@ import {
   SHOW_FILTERED_TODO_ITEMS,
   SHOW_MODAL_AREA,
   HIDE_MODAL_AREA,
+  SAVE_EDITED_TODO_ITEM,
+  EDIT_TODO_ITEM,
+  CHANGE_MODAL_FIELD,
 } from './actionsTypes';
 
 let todoId = 5;
@@ -40,4 +43,26 @@ export const showModalArea = () => ({
 
 export const hideModalArea = () => ({
   type: HIDE_MODAL_AREA,
+});
+
+export const saveEditedTodoItem = (title, description, priority, id) => ({
+  type: SAVE_EDITED_TODO_ITEM,
+  title,
+  description,
+  priority,
+  id,
+});
+
+export const editTodoItem = (id, title, description, priority) => ({
+  type: EDIT_TODO_ITEM,
+  id,
+  title,
+  description,
+  priority,
+});
+
+export const changeModalField = (name, value) => ({
+  type: CHANGE_MODAL_FIELD,
+  name,
+  value,
 });
