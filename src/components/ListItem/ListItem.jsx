@@ -10,7 +10,7 @@ const ListItem = ({
   status,
   deleteItem,
   onToggleDone,
-  setCurrentFields,
+  editItem,
 }) => {
   const [visible, changeVisible] = useState(false);
   return (
@@ -52,7 +52,7 @@ const ListItem = ({
             >
               done
             </button>
-            <button type='button' className="btn btn-secondary" name="edit" onClick={() => setCurrentFields(id)}>
+            <button type='button' className="btn btn-secondary" name="edit" onClick={() => editItem(id, title, description, priority)}>
               edit
             </button>
             <button type='button' className="btn btn-danger" name="delete" onClick={() => deleteItem(id)}>
@@ -73,7 +73,7 @@ ListItem.propTypes = {
   status: PropTypes.bool.isRequired,
   deleteItem: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
-  setCurrentFields: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
 }
 
 export default ListItem;
