@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {addTodoItem, deleteTodoItem, toggleStatusTodoItem} from '../../actions/index'
+import {addTodoItem, deleteTodoItem, toggleStatusTodoItem, editTodoItem} from '../../actions/index'
 import ListItem from '../ListItem/ListItem';
 import filetrForAll from '../../additionalFunctions/filetrForAll';
 import searchItems from '../../additionalFunctions/searchItems';
 
 const List = (props) => {
-  const { todoList, deleteItem, onToggleDone, addItem, setCurrentFields, filters } = props;
+  const { todoList, deleteItem, onToggleDone, addItem, filters, editItem } = props;
   const currentTodoList = searchItems(
     filetrForAll(todoList, filters.priority1, filters.status1),
     filters.search1,
@@ -27,7 +27,7 @@ const List = (props) => {
               deleteItem={deleteItem}
               onToggleDone={onToggleDone}
               addItem={addItem}
-              setCurrentFields={setCurrentFields}
+              editItem={editItem}
             />
           );
         })}
@@ -41,8 +41,8 @@ List.propTypes = {
   deleteItem: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
   addItem: PropTypes.func.isRequired,
-  setCurrentFields: PropTypes.func.isRequired,
   filters: PropTypes.instanceOf(Object).isRequired,
+  editItem: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -55,6 +55,7 @@ const mapStateToDispatch = (dispatch) => {
     addItem: (title, description, priority) => dispatch(addTodoItem(title, description, priority)),
     deleteItem: (id) => dispatch(deleteTodoItem(id)),
     onToggleDone: (id) => dispatch(toggleStatusTodoItem(id)),
+    editItem: (id, title, description, priority) => dispatch(editTodoItem(id, title, description, priority)),
   };
 }
 
