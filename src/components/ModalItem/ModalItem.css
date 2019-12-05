@@ -1,0 +1,54 @@
+.modal {
+  display: none;
+}
+  
+.modal__fade {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+  background-color: #000;
+  z-index: 5;
+}
+  
+.modal__form {
+  width: 200px;
+  height: 320px;
+  background-color: #f8f7f4;
+  border-radius: 9px;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+  padding: 10px;
+}
+  
+.modal__part {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+  
+.modal__part label {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+  
+.modal__buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+  
+.modal__buttons button {
+  min-width: 60px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+textarea{
+  resize: none;
+}

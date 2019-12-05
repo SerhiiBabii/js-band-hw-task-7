@@ -1,0 +1,21 @@
+{
+  "extends": ["airbnb", "prettier", "react-app"],
+  "plugins": ["prettier"],
+  "rules": {
+    "no-console": "off",
+    "no-use-before-define": ["error", { "functions": false }],
+    "no-alert": "off",
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "always-multiline"
+    }],
+    "arrow-parens": ["error", "always"]
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  }
+}
