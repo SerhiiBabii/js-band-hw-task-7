@@ -10,7 +10,7 @@ import {
   CHANGE_MODAL_FIELD,
 } from './actionsTypes';
 
-let todoId = 5;
+let todoId = 2;
 
 // eslint-disable-next-line no-return-assign
 export const addTodoItem = (title, description, priority, id = (todoId += 1)) => ({
