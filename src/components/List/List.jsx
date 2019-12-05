@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {addTodoItem, deleteTodoItem, toggleStatusTodoItem} from '../../actions/index'
 import ListItem from '../ListItem/ListItem';
+import filetrForAll from '../../additionalFunctions/filetrForAll';
+import searchItems from '../../additionalFunctions/searchItems';
 
 const List = (props) => {
-  const { todoList, deleteItem, onToggleDone, addItem, setCurrentFields } = props;
+  const { todoList, deleteItem, onToggleDone, addItem, setCurrentFields, filters } = props;
+  const currentTodoList = searchItems(
+    filetrForAll(todoList, filters.priority1, filters.status1),
+    filters.search1,
+  );
   return (
     <div className="col-12">
       <div className="row">
-        {todoList.map((item) => {
+        {currentTodoList.map((item) => {
           return (
             <ListItem
               key={item.id}
@@ -34,6 +42,20 @@ List.propTypes = {
   onToggleDone: PropTypes.func.isRequired,
   addItem: PropTypes.func.isRequired,
   setCurrentFields: PropTypes.func.isRequired,
+  filters: PropTypes.instanceOf(Object).isRequired,
 }
 
-export default List;
+const mapStateToProps = (state) => ({
+  todoList: state.todos.todos,
+  filters: state.todos.filters,
+});
+
+const mapStateToDispatch = (dispatch) => {
+  return {
+    addItem: (title, description, priority) => dispatch(addTodoItem(title, description, priority)),
+    deleteItem: (id) => dispatch(deleteTodoItem(id)),
+    onToggleDone: (id) => dispatch(toggleStatusTodoItem(id)),
+  };
+}
+
+export default connect(mapStateToProps, mapStateToDispatch)(List);
