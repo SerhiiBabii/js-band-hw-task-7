@@ -5,7 +5,11 @@ import {
   SHOW_FILTERED_TODO_ITEMS,
   SHOW_MODAL_AREA,
   HIDE_MODAL_AREA,
+  SAVE_EDITED_TODO_ITEM,
+  EDIT_TODO_ITEM,
+  CHANGE_MODAL_FIELD,
 } from '../actions/actionsTypes';
+import saveEditTodoItem from '../additionalFunctions/saveEditTodoItem';
 
 const initialState = {
   todos: [
@@ -60,7 +64,13 @@ const todos = (state = initialState, action) => {
             status: false,
           },
         ],
+        currentId: '',
         modalShow: false,
+        modalFields: {
+          modalTitle: '',
+          modalDescription: '',
+          modalPriority: 'high',
+        },
       };
     case DELETE_TODO_ITEM:
       return {
@@ -91,11 +101,42 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         modalShow: false,
-        currentFields: {
-          currentId: '',
-          currentTitle: '',
-          currentDescription: '',
-          currentPriority: 'high',
+        modalFields: {
+          modalTitle: '',
+          modalDescription: '',
+          modalPriority: 'high',
+        },
+        currentId: '',
+      };
+    case EDIT_TODO_ITEM:
+      return {
+        ...state,
+        currentId: action.id,
+        modalShow: true,
+        modalFields: {
+          modalTitle: action.title,
+          modalDescription: action.description,
+          modalPriority: action.priority,
+        },
+      };
+    case SAVE_EDITED_TODO_ITEM:
+      return {
+        ...state,
+        todos: saveEditTodoItem(action.title, action.description, action.priority, action.id, state.todos),
+        modalShow: false,
+        modalFields: {
+          modalTitle: '',
+          modalDescription: '',
+          modalPriority: 'high',
+        },
+        currentId: '',
+      };
+    case CHANGE_MODAL_FIELD:
+      return {
+        ...state,
+        modalFields: {
+          ...state.modalFields,
+          [action.name]: action.value,
         },
       };
     default:
