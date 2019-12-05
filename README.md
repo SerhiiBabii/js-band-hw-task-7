@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SerhiiBabii/js-band-hw-task-7.svg?branch=master)](https://travis-ci.org/SerhiiBabii/js-band-hw-task-7)
+
 # Homework 7
 
 ## Before launching the project it is necessary:
